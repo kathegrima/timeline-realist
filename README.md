@@ -4,7 +4,7 @@
 
 **Timeline Realist** is a free tool for hardware PMs. Enter your project phases with estimated durations, add context about your team and constraints, and get an honest assessment from an AI trained to think like a veteran hardware PM — including the risks you forgot, the phases you skipped, and the schedule slip you didn't want to admit.
 
-🌐 **Live:** [tuonome.github.io/timeline-realist](https://tuonome.github.io/timeline-realist)
+🌐 **Live:** [kathegrima.github.io/timeline-realist](https://kathegrima.github.io/timeline-realist)
 
 🌍 **Available in:** Italian 🇮🇹 · English 🇬🇧
 
