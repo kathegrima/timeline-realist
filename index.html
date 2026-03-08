@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Timeline Realist — Hardware PM Truth Machine</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏱</text></svg>"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --bg: #080808;
       --surface: rgba(255,255,255,.03);
@@ -21,55 +20,49 @@
       --muted2: #888;
       --red: #FF3B30;
       --orange: #FF9F0A;
-      --green: #30D158;
-      --dot: rgba(255,255,255,.15);
       --radius: 2px;
     }
-
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: var(--bg); color: var(--text);
       font-family: 'Space Mono', 'Courier New', monospace;
-      min-height: 100vh;
-      overflow-x: hidden;
+      min-height: 100vh; overflow-x: hidden;
     }
-
-    /* ── dot grid background ── */
     body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+      content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,.055) 1px, transparent 1px);
       background-size: 28px 28px;
     }
-
-    /* ── noise overlay ── */
     body::after {
-      content: '';
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255,63,48,.04) 0%, transparent 70%);
     }
-
     .page { position: relative; z-index: 1; max-width: 780px; margin: 0 auto; padding: 0 1.4rem 5rem; }
 
     /* ── Nav ── */
     nav {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.8rem 0 2rem;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 3rem;
+      padding: 1.8rem 0 2rem; border-bottom: 1px solid var(--border); margin-bottom: 3rem;
     }
-    .nav-logo {
-      font-size: .75rem; font-weight: 700; letter-spacing: .2em;
-      text-transform: uppercase; color: var(--text);
-    }
+    .nav-left { display: flex; align-items: center; gap: 1.2rem; }
+    .nav-logo { font-size: .75rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--text); }
     .nav-logo span { color: var(--red); }
-    .nav-badge {
-      font-size: .65rem; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--muted2); border: 1px solid var(--border);
-      padding: .25rem .7rem; border-radius: var(--radius);
+    .nav-badge { font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted2); border: 1px solid var(--border); padding: .25rem .7rem; border-radius: var(--radius); }
+
+    /* ── Language toggle ── */
+    .lang-toggle {
+      display: flex; gap: 2px;
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2px;
     }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      font-family: 'Space Mono', monospace; font-size: .65rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--muted2); padding: .3rem .6rem; border-radius: var(--radius);
+      transition: all .2s;
+    }
+    .lang-btn.active { background: var(--red); color: #fff; }
 
     /* ── Hero ── */
     .hero { margin-bottom: 3rem; }
@@ -78,108 +71,58 @@
       color: var(--red); margin-bottom: 1rem;
       display: flex; align-items: center; gap: .6rem;
     }
-    .hero-eyebrow::before {
-      content: ''; display: inline-block;
-      width: 24px; height: 1px; background: var(--red);
-    }
-    h1 {
-      font-size: clamp(1.8rem, 5vw, 3.2rem);
-      font-weight: 700; line-height: 1.1; letter-spacing: -.02em;
-      margin-bottom: 1.2rem;
-    }
+    .hero-eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--red); }
+    h1 { font-size: clamp(1.8rem, 5vw, 3.2rem); font-weight: 700; line-height: 1.1; letter-spacing: -.02em; margin-bottom: 1.2rem; }
     h1 em { font-style: normal; color: var(--red); }
-    .hero-sub {
-      font-size: .78rem; color: var(--muted2); line-height: 1.8;
-      max-width: 520px; font-family: inherit;
-    }
+    .hero-sub { font-size: .78rem; color: var(--muted2); line-height: 1.8; max-width: 520px; }
 
     /* ── Hofstadter quote ── */
     .hofstadter {
-      margin: 2.5rem 0;
-      border-left: 1px solid var(--red);
-      padding: .8rem 1.2rem;
-      background: rgba(255,59,48,.04);
-      font-size: .75rem; color: var(--muted2);
-      font-style: italic; line-height: 1.7;
+      margin: 2.5rem 0; border-left: 1px solid var(--red);
+      padding: .8rem 1.2rem; background: rgba(255,59,48,.04);
+      font-size: .75rem; color: var(--muted2); font-style: italic; line-height: 1.7;
     }
     .hofstadter cite { display: block; margin-top: .4rem; font-style: normal; color: var(--muted); font-size: .68rem; letter-spacing: .08em; }
 
-    /* ── Input card ── */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 1.6rem;
-      margin-bottom: 1rem;
-    }
-    .card-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1.2rem;
-    }
-    .card-label {
-      font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--muted2);
-    }
-    .card-num {
-      font-size: .62rem; color: var(--muted); letter-spacing: .1em;
-    }
+    /* ── Card ── */
+    .card { background: var(--surface); border: 1px solid var(--border); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1.6rem; margin-bottom: 1rem; }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; }
+    .card-label { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--muted2); }
+    .card-num { font-size: .62rem; color: var(--muted); letter-spacing: .1em; }
 
-    /* ── Phase rows ── */
+    /* ── Phases ── */
     .phases { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.2rem; }
-    .phase-row {
-      display: grid; grid-template-columns: 1fr 120px 36px;
-      gap: .5rem; align-items: center;
+    .phase-header { display: grid; grid-template-columns: 1fr 120px 36px; gap: .5rem; margin-bottom: .4rem; }
+    .phase-header span { font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .phase-row { display: grid; grid-template-columns: 1fr 120px 36px; gap: .5rem; align-items: center; }
+    .phase-row input {
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); font-family: 'Space Mono', monospace; font-size: .78rem;
+      padding: .5rem .7rem; outline: none; border-radius: var(--radius);
+      transition: border-color .2s; width: 100%;
     }
-    .phase-row input, .phase-row select {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-family: 'Space Mono', monospace;
-      font-size: .78rem;
-      padding: .5rem .7rem;
-      outline: none;
-      border-radius: var(--radius);
-      transition: border-color .2s;
-      width: 100%;
-    }
-    .phase-row input:focus, .phase-row select:focus { border-color: var(--border-bright); }
+    .phase-row input:focus { border-color: var(--border-bright); }
     .phase-row input::placeholder { color: var(--muted); }
     .remove-btn {
-      background: none; border: 1px solid var(--border);
-      color: var(--muted); font-size: .8rem; cursor: pointer;
-      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      font-size: .8rem; cursor: pointer; width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
       transition: all .2s; border-radius: var(--radius); font-family: inherit;
     }
     .remove-btn:hover { border-color: var(--red); color: var(--red); }
-
-    .phase-header {
-      display: grid; grid-template-columns: 1fr 120px 36px;
-      gap: .5rem; margin-bottom: .4rem;
-    }
-    .phase-header span {
-      font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
-    }
-
     .add-phase {
-      background: none; border: 1px dashed var(--border);
-      color: var(--muted2); font-family: 'Space Mono', monospace;
-      font-size: .72rem; padding: .5rem; cursor: pointer;
-      width: 100%; letter-spacing: .08em; text-transform: uppercase;
+      background: none; border: 1px dashed var(--border); color: var(--muted2);
+      font-family: 'Space Mono', monospace; font-size: .72rem; padding: .5rem;
+      cursor: pointer; width: 100%; letter-spacing: .08em; text-transform: uppercase;
       transition: all .2s; border-radius: var(--radius);
     }
     .add-phase:hover { border-color: var(--border-bright); color: var(--text); }
 
-    /* ── Context textarea ── */
-    .context-row { margin-top: 1rem; }
     textarea {
-      width: 100%; background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--text); font-family: 'Space Mono', monospace;
-      font-size: .78rem; line-height: 1.7;
-      padding: .7rem .9rem; resize: none; min-height: 80px;
-      outline: none; transition: border-color .2s;
-      border-radius: var(--radius);
+      width: 100%; background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); font-family: 'Space Mono', monospace; font-size: .78rem;
+      line-height: 1.7; padding: .7rem .9rem; resize: none; min-height: 80px;
+      outline: none; transition: border-color .2s; border-radius: var(--radius);
     }
     textarea:focus { border-color: var(--border-bright); }
     textarea::placeholder { color: var(--muted); }
@@ -187,140 +130,99 @@
     /* ── CTA ── */
     .cta-row { display: flex; gap: .8rem; align-items: center; margin-top: 1rem; flex-wrap: wrap; }
     .cta {
-      flex: 1; min-width: 200px;
-      background: var(--red); border: none; border-radius: var(--radius);
-      color: #fff; font-family: 'Space Mono', monospace;
-      font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-      padding: .85rem 1.4rem; cursor: pointer;
+      flex: 1; min-width: 200px; background: var(--red); border: none; border-radius: var(--radius);
+      color: #fff; font-family: 'Space Mono', monospace; font-size: .78rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; padding: .85rem 1.4rem; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: .6rem;
       transition: opacity .2s, transform .15s;
     }
     .cta:hover:not(:disabled) { opacity: .85; transform: translateY(-1px); }
     .cta:disabled { opacity: .35; cursor: not-allowed; transform: none; }
     .cta-hint { font-size: .65rem; color: var(--muted); letter-spacing: .06em; }
-
-    .spinner {
-      width: 14px; height: 14px;
-      border: 1.5px solid rgba(255,255,255,.3); border-top-color: #fff;
-      border-radius: 50%; animation: spin .7s linear infinite; display: none;
-    }
+    .spinner { width: 14px; height: 14px; border: 1.5px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; display: none; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── Error ── */
-    .error-box {
-      background: rgba(255,59,48,.08); border: 1px solid rgba(255,59,48,.25);
-      padding: .7rem 1rem; color: var(--red); font-size: .75rem;
-      display: none; margin-top: .8rem; border-radius: var(--radius);
+    .error-box { background: rgba(255,59,48,.08); border: 1px solid rgba(255,59,48,.25); padding: .7rem 1rem; color: var(--red); font-size: .75rem; display: none; margin-top: .8rem; border-radius: var(--radius); }
+
+    /* ── Disclaimer ── */
+    .disclaimer {
+      margin-top: 1.5rem; padding: .8rem 1rem;
+      border: 1px solid rgba(255,159,10,.15);
+      background: rgba(255,159,10,.04);
+      font-size: .65rem; color: var(--muted2); line-height: 1.7;
+      border-radius: var(--radius);
     }
+    .disclaimer strong { color: var(--orange); }
 
     /* ── Response ── */
     .response-wrap { display: none; animation: fadeUp .4s ease; margin-top: 1.5rem; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-
-    .response-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 1.6rem;
-    }
-    .response-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 1.4rem; padding-bottom: .9rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .response-title {
-      font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--red);
-    }
-    .response-stamp {
-      font-size: .62rem; color: var(--muted); letter-spacing: .08em;
-    }
-    .response-text {
-      font-size: .82rem; line-height: 1.9; color: var(--text);
-      white-space: pre-wrap;
-    }
+    .response-card { background: var(--surface); border: 1px solid var(--border); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 1.6rem; }
+    .response-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.4rem; padding-bottom: .9rem; border-bottom: 1px solid var(--border); }
+    .response-title { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--red); }
+    .response-stamp { font-size: .62rem; color: var(--muted); letter-spacing: .08em; }
+    .response-text { font-size: .82rem; line-height: 1.9; color: var(--text); white-space: pre-wrap; }
     .response-text strong { color: var(--orange); font-weight: 700; }
     .response-text em { color: var(--red); font-style: normal; }
-
-    .response-actions {
-      display: flex; gap: .5rem; margin-top: 1.2rem;
-      padding-top: .9rem; border-top: 1px solid var(--border);
-    }
-    .act-btn {
-      background: none; border: 1px solid var(--border);
-      color: var(--muted2); font-family: 'Space Mono', monospace;
-      font-size: .65rem; letter-spacing: .1em; text-transform: uppercase;
-      padding: .38rem .8rem; cursor: pointer;
-      transition: all .18s; border-radius: var(--radius);
-    }
+    .response-actions { display: flex; gap: .5rem; margin-top: 1.2rem; padding-top: .9rem; border-top: 1px solid var(--border); }
+    .act-btn { background: none; border: 1px solid var(--border); color: var(--muted2); font-family: 'Space Mono', monospace; font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; padding: .38rem .8rem; cursor: pointer; transition: all .18s; border-radius: var(--radius); }
     .act-btn:hover { border-color: var(--border-bright); color: var(--text); }
 
-    /* ── Multipliers legend ── */
-    .legend {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: .5rem; margin-top: 2rem;
-    }
+    /* ── EVT/DVT/PVT info ── */
+    .legend { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; margin-top: 2rem; }
     @media (max-width: 500px) { .legend { grid-template-columns: repeat(2,1fr); } }
-    .legend-item {
-      background: var(--surface); border: 1px solid var(--border);
-      padding: .7rem .8rem;
-    }
+    .legend-item { background: var(--surface); border: 1px solid var(--border); padding: .7rem .8rem; }
     .legend-phase { font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
-    .legend-mult { font-size: 1rem; font-weight: 700; color: var(--orange); }
-    .legend-label { font-size: .6rem; color: var(--muted); margin-top: .1rem; }
+    .legend-desc { font-size: .65rem; color: var(--muted2); line-height: 1.5; margin-top: .3rem; }
 
-    /* ── Footer ── */
-    footer {
-      margin-top: 4rem; padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: .62rem; color: var(--muted); letter-spacing: .08em; flex-wrap: wrap; gap: .5rem;
-    }
+    footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; font-size: .62rem; color: var(--muted); letter-spacing: .08em; flex-wrap: wrap; gap: .5rem; }
     footer a { color: var(--muted); text-decoration: none; }
     footer a:hover { color: var(--text); }
 
-    @media (max-width: 480px) { .phase-row { grid-template-columns: 1fr 90px 32px; } }
+    @media (max-width: 480px) { .phase-row, .phase-header { grid-template-columns: 1fr 90px 32px; } }
   </style>
 </head>
 <body>
 <div class="page">
 
   <nav>
-    <div class="nav-logo">Timeline<span>Realist</span></div>
-    <div class="nav-badge">Hardware PM Tool</div>
+    <div class="nav-left">
+      <div class="nav-logo">Timeline<span>Realist</span></div>
+      <div class="nav-badge" data-i18n="badge">Hardware PM Tool</div>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('it')">🇮🇹 IT</button>
+      <button class="lang-btn" onclick="setLang('en')">🇬🇧 EN</button>
+    </div>
   </nav>
 
   <div class="hero">
-    <div class="hero-eyebrow">Truth Machine v1.0</div>
-    <h1>La tua timeline<br>è <em>sbagliata.</em><br>Scopri di quanto.</h1>
-    <p class="hero-sub">Inserisci le fasi del tuo progetto hardware. Il sistema applica la legge di Hofstadter, identifica i rischi che non hai considerato e restituisce una stima onesta.</p>
+    <div class="hero-eyebrow" data-i18n="eyebrow">Truth Machine v1.0</div>
+    <h1 data-i18n="h1_html">La tua timeline<br>è <em>sbagliata.</em><br>Scopri di quanto.</h1>
+    <p class="hero-sub" data-i18n="herosub">Inserisci le fasi del tuo progetto hardware. Il sistema analizza la struttura, identifica i rischi tipici dell'hardware e restituisce una stima più onesta — basata sull'esperienza, non su formule magiche.</p>
   </div>
 
   <blockquote class="hofstadter">
-    "It always takes longer than you expect, even when you take into account Hofstadter's Law."
-    <cite>— Douglas Hofstadter, Gödel, Escher, Bach (1979)</cite>
+    <span data-i18n="hofstadter_quote">"It always takes longer than you expect, even when you take into account Hofstadter's Law."</span>
+    <cite>— Douglas Hofstadter, <em>Gödel, Escher, Bach</em> (1979)</cite>
   </blockquote>
 
-  <!-- Input card -->
   <div class="card">
     <div class="card-header">
-      <span class="card-label">Fasi del progetto</span>
-      <span class="card-num" id="phaseCount">0 / fasi</span>
+      <span class="card-label" data-i18n="phases_label">Fasi del progetto</span>
+      <span class="card-num" id="phaseCount">0 fasi</span>
     </div>
-
     <div class="phase-header">
-      <span>Nome fase</span>
-      <span>Durata stimata</span>
+      <span data-i18n="col_phase">Nome fase</span>
+      <span data-i18n="col_duration">Durata stimata</span>
       <span></span>
     </div>
-
     <div class="phases" id="phaseList"></div>
+    <button class="add-phase" id="addPhaseBtn" onclick="addPhase()">+ <span data-i18n="add_phase">Aggiungi fase</span></button>
 
-    <button class="add-phase" onclick="addPhase()">+ Aggiungi fase</button>
-
-    <div class="context-row">
-      <div class="card-label" style="margin-bottom:.6rem">Contesto aggiuntivo (opzionale)</div>
-      <textarea id="contextInput" rows="3"
+    <div style="margin-top:1rem">
+      <div class="card-label" style="margin-bottom:.6rem" data-i18n="context_label">Contesto aggiuntivo (opzionale)</div>
+      <textarea id="contextInput" rows="3" data-i18n-placeholder="context_placeholder"
         placeholder="Es: team di 3 ingegneri, primo prodotto hardware, dipendenza da un supplier unico in Asia, target mass production Q4..."></textarea>
     </div>
 
@@ -329,33 +231,33 @@
     <div class="cta-row">
       <button class="cta" id="ctaBtn" onclick="generate()">
         <div class="spinner" id="spinner"></div>
-        <span id="btnText">⏱ Dammi la verità</span>
+        <span id="btnText" data-i18n="cta">⏱ Dammi la verità</span>
       </button>
-      <span class="cta-hint">Powered by Gemini · Gratis</span>
+      <span class="cta-hint" data-i18n="cta_hint">Powered by Gemini · Gratis</span>
     </div>
   </div>
 
-  <!-- Multipliers legend -->
-  <div class="legend">
-    <div class="legend-item">
-      <div class="legend-phase">Prototipazione</div>
-      <div class="legend-mult">×1.5</div>
-      <div class="legend-label">Iterazioni HW impreviste</div>
-    </div>
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">⚠ Nota metodologica</strong><br>
+    <span data-i18n="disclaimer_body">Le stime di revisione sono generate da AI sulla base di pattern comuni nell'industria hardware, non da studi statistici certificati. Usale come punto di partenza per una conversazione con il tuo team, non come verità assoluta. La Legge di Hofstadter è reale — tutto il resto è esperienza condivisa.</span>
+  </div>
+
+  <div class="legend" style="margin-top:1.5rem">
     <div class="legend-item">
       <div class="legend-phase">EVT</div>
-      <div class="legend-mult">×2.0</div>
-      <div class="legend-label">First spin sempre fallisce</div>
+      <div class="legend-desc" data-i18n="evt_desc">Engineering Validation Test — verifica che il design funzioni secondo le specifiche.</div>
     </div>
     <div class="legend-item">
       <div class="legend-phase">DVT</div>
-      <div class="legend-mult">×1.8</div>
-      <div class="legend-label">Compliance + retest</div>
+      <div class="legend-desc" data-i18n="dvt_desc">Design Validation Test — verifica affidabilità, compliance e requisiti di produzione.</div>
     </div>
     <div class="legend-item">
       <div class="legend-phase">PVT</div>
-      <div class="legend-mult">×1.3</div>
-      <div class="legend-label">Tooling & yield issues</div>
+      <div class="legend-desc" data-i18n="pvt_desc">Production Validation Test — prima produzione in fabbrica, valida il processo manifatturiero.</div>
+    </div>
+    <div class="legend-item">
+      <div class="legend-phase">MP</div>
+      <div class="legend-desc" data-i18n="mp_desc">Mass Production — produzione in serie. Arriva sempre dopo i problemi di PVT.</div>
     </div>
   </div>
 
@@ -363,19 +265,19 @@
   <div class="response-wrap" id="responseWrap">
     <div class="response-card">
       <div class="response-header">
-        <span class="response-title">// Analisi realistica</span>
+        <span class="response-title" data-i18n="response_title">// Analisi realistica</span>
         <span class="response-stamp" id="responseStamp">—</span>
       </div>
       <div class="response-text" id="responseText"></div>
       <div class="response-actions">
-        <button class="act-btn" onclick="copyText()">Copy</button>
-        <button class="act-btn" onclick="resetForm()">Reset</button>
+        <button class="act-btn" onclick="copyText()" data-i18n="copy">Copy</button>
+        <button class="act-btn" onclick="resetForm()" data-i18n="reset">Reset</button>
       </div>
     </div>
   </div>
 
   <footer>
-    <span>© 2026 Timeline Realist — For Hardware PMs who like the truth</span>
+    <span data-i18n="footer">© 2026 Timeline Realist — For Hardware PMs who like the truth</span>
     <span>Powered by <a href="https://gemini.google.com" target="_blank">Google Gemini</a></span>
   </footer>
 
@@ -384,11 +286,125 @@
 <script>
   const WORKER_URL = 'https://timeline-realist.fumettiastro.workers.dev/';
 
+  // ── i18n ──
+  const STRINGS = {
+    it: {
+      badge: 'Hardware PM Tool',
+      eyebrow: 'Truth Machine v1.0',
+      h1_html: 'La tua timeline<br>è <em>sbagliata.</em><br>Scopri di quanto.',
+      herosub: 'Inserisci le fasi del tuo progetto hardware. Il sistema analizza la struttura, identifica i rischi tipici dell\'hardware e restituisce una stima più onesta — basata sull\'esperienza, non su formule magiche.',
+      hofstadter_quote: '"It always takes longer than you expect, even when you take into account Hofstadter\'s Law."',
+      phases_label: 'Fasi del progetto',
+      col_phase: 'Nome fase',
+      col_duration: 'Durata stimata',
+      add_phase: 'Aggiungi fase',
+      context_label: 'Contesto aggiuntivo (opzionale)',
+      context_placeholder: 'Es: team di 3 ingegneri, primo prodotto hardware, dipendenza da un supplier unico in Asia, target mass production Q4...',
+      phase_placeholder: 'Es: EVT, DVT, Certificazione FCC…',
+      duration_placeholder: 'Es: 6 settimane',
+      cta: '⏱ Dammi la verità',
+      cta_hint: 'Powered by Gemini · Gratis',
+      disclaimer_title: '⚠ Nota metodologica',
+      disclaimer_body: 'Le stime di revisione sono generate da AI sulla base di pattern comuni nell\'industria hardware, non da studi statistici certificati. Usale come punto di partenza per una conversazione con il tuo team, non come verità assoluta. La Legge di Hofstadter è reale — tutto il resto è esperienza condivisa.',
+      evt_desc: 'Engineering Validation Test — verifica che il design funzioni secondo le specifiche.',
+      dvt_desc: 'Design Validation Test — verifica affidabilità, compliance e requisiti di produzione.',
+      pvt_desc: 'Production Validation Test — prima produzione in fabbrica, valida il processo manifatturiero.',
+      mp_desc: 'Mass Production — produzione in serie. Arriva sempre dopo i problemi di PVT.',
+      response_title: '// Analisi realistica',
+      copy: 'Copia',
+      reset: 'Reset',
+      footer: '© 2026 Timeline Realist — Per i PM hardware che preferiscono la verità',
+      error_empty: 'Aggiungi almeno una fase prima di procedere.',
+      error_server: 'Errore server: ',
+      loading: 'Analisi in corso...',
+      phase_count: (n) => `${n} fase${n !== 1 ? 'i' : ''}`,
+      system_prompt: `Sei un PM hardware veterano con esperienza in prodotti consumer electronics e robotica.
+Il tuo compito è analizzare una timeline di progetto hardware e fornire una valutazione realistica.
+
+ISTRUZIONI:
+- Analizza ogni fase indicata e suggerisci una stima più realistica, spiegando il ragionamento basato su rischi specifici di quella fase (NON applicare moltiplicatori fissi — ragiona sul contesto).
+- Identifica massimo 3 rischi concreti e specifici per questo progetto (supply chain, certificazioni, integrazione HW/SW, tooling, ecc.).
+- Segnala eventuali fasi mancanti che tipicamente vengono dimenticate (es. first article inspection, compliance testing, tooling lead time).
+- Sii diretto e onesto: se la timeline è irrealistica, dillo chiaramente e spiega perché.
+- Tono: professionale, asciutto, con la franchezza di un collega esperto. Non condiscendente.
+- Chiudi con una valutazione sintetica della timeline complessiva.
+- Rispondi in italiano.
+- Formato: sezioni chiare con titoli, testo scorrevole. Evita liste infinite di bullet.`
+    },
+    en: {
+      badge: 'Hardware PM Tool',
+      eyebrow: 'Truth Machine v1.0',
+      h1_html: 'Your timeline<br>is <em>wrong.</em><br>Find out by how much.',
+      herosub: 'Enter your hardware project phases. The system analyzes the structure, identifies typical hardware risks, and returns a more honest estimate — based on experience, not magic formulas.',
+      hofstadter_quote: '"It always takes longer than you expect, even when you take into account Hofstadter\'s Law."',
+      phases_label: 'Project phases',
+      col_phase: 'Phase name',
+      col_duration: 'Estimated duration',
+      add_phase: 'Add phase',
+      context_label: 'Additional context (optional)',
+      context_placeholder: 'E.g.: 3-engineer team, first hardware product, single-source supplier in Asia, target mass production Q4...',
+      phase_placeholder: 'E.g.: EVT, DVT, FCC certification…',
+      duration_placeholder: 'E.g.: 6 weeks',
+      cta: '⏱ Give me the truth',
+      cta_hint: 'Powered by Gemini · Free',
+      disclaimer_title: '⚠ Methodological note',
+      disclaimer_body: 'Revised estimates are AI-generated based on common patterns in the hardware industry, not certified statistical studies. Use them as a starting point for a conversation with your team, not as absolute truth. Hofstadter\'s Law is real — everything else is shared experience.',
+      evt_desc: 'Engineering Validation Test — verifies the design works to specification.',
+      dvt_desc: 'Design Validation Test — validates reliability, compliance and manufacturing requirements.',
+      pvt_desc: 'Production Validation Test — first factory run, validates the manufacturing process.',
+      mp_desc: 'Mass Production — serial production. Always comes after PVT issues.',
+      response_title: '// Realistic analysis',
+      copy: 'Copy',
+      reset: 'Reset',
+      footer: '© 2026 Timeline Realist — For Hardware PMs who like the truth',
+      error_empty: 'Add at least one phase before proceeding.',
+      error_server: 'Server error: ',
+      loading: 'Analyzing...',
+      phase_count: (n) => `${n} phase${n !== 1 ? 's' : ''}`,
+      system_prompt: `You are a veteran hardware PM with experience in consumer electronics and robotics products.
+Your task is to analyze a hardware project timeline and provide a realistic assessment.
+
+INSTRUCTIONS:
+- Analyze each listed phase and suggest a more realistic estimate, explaining your reasoning based on specific risks for that phase (do NOT apply fixed multipliers — reason from context).
+- Identify at most 3 concrete, project-specific risks (supply chain, certifications, HW/SW integration, tooling, etc.).
+- Flag any missing phases that are typically forgotten (e.g., first article inspection, compliance testing, tooling lead time).
+- Be direct and honest: if the timeline is unrealistic, say so clearly and explain why.
+- Tone: professional, dry, with the candor of an experienced colleague. Not condescending.
+- Close with a concise overall assessment of the timeline.
+- Reply in English.
+- Format: clear sections with headings, flowing text. Avoid endless bullet lists.`
+    }
+  };
+
+  let lang = 'it';
+
+  function setLang(l) {
+    lang = l;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent.toLowerCase().includes(l)));
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (STRINGS[l][key] !== undefined) {
+        if (key.endsWith('_html')) el.innerHTML = STRINGS[l][key];
+        else el.textContent = STRINGS[l][key];
+      }
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (STRINGS[l][key]) el.placeholder = STRINGS[l][key];
+    });
+    // Update phase placeholders
+    document.querySelectorAll('.phase-name-input').forEach(el => el.placeholder = STRINGS[l].phase_placeholder);
+    document.querySelectorAll('.phase-dur-input').forEach(el => el.placeholder = STRINGS[l].duration_placeholder);
+    // Update phase count
+    document.getElementById('phaseCount').textContent = STRINGS[l].phase_count(phases.length);
+    document.documentElement.lang = l;
+  }
+
   // ── Phase management ──
   let phases = [];
 
   function addPhase(name = '', duration = '') {
-    const id = Date.now();
+    const id = Date.now() + Math.random();
     phases.push({ id, name, duration });
     renderPhases();
   }
@@ -399,19 +415,18 @@
   }
 
   function renderPhases() {
+    const s = STRINGS[lang];
     const list = document.getElementById('phaseList');
     list.innerHTML = phases.map(p => `
       <div class="phase-row" id="row-${p.id}">
-        <input type="text" placeholder="Es: EVT, DVT, Certificazione FCC…"
-          value="${p.name}"
-          oninput="updatePhase(${p.id}, 'name', this.value)"/>
-        <input type="text" placeholder="Es: 6 weeks"
-          value="${p.duration}"
-          oninput="updatePhase(${p.id}, 'duration', this.value)"/>
+        <input type="text" class="phase-name-input" placeholder="${s.phase_placeholder}"
+          value="${p.name}" oninput="updatePhase(${p.id}, 'name', this.value)"/>
+        <input type="text" class="phase-dur-input" placeholder="${s.duration_placeholder}"
+          value="${p.duration}" oninput="updatePhase(${p.id}, 'duration', this.value)"/>
         <button class="remove-btn" onclick="removePhase(${p.id})">×</button>
       </div>
     `).join('');
-    document.getElementById('phaseCount').textContent = `${phases.length} fase${phases.length !== 1 ? 'i' : ''}`;
+    document.getElementById('phaseCount').textContent = STRINGS[lang].phase_count(phases.length);
   }
 
   function updatePhase(id, field, value) {
@@ -419,22 +434,19 @@
     if (p) p[field] = value;
   }
 
-  // Init with 3 default phases
-  addPhase('Prototipazione', '4 weeks');
-  addPhase('EVT', '6 weeks');
-  addPhase('DVT', '8 weeks');
+  addPhase('Prototipazione', '4 settimane');
+  addPhase('EVT', '6 settimane');
+  addPhase('DVT', '8 settimane');
 
   // ── Generate ──
   async function generate() {
+    const s = STRINGS[lang];
     const filled = phases.filter(p => p.name.trim());
-    if (filled.length === 0) { showError('Aggiungi almeno una fase prima di procedere.'); return; }
+    if (filled.length === 0) { showError(s.error_empty); return; }
 
-    const phaseText = filled.map(p =>
-      `- ${p.name}${p.duration ? ': ' + p.duration : ''}`
-    ).join('\n');
-
+    const phaseText = filled.map(p => `- ${p.name}${p.duration ? ': ' + p.duration : ''}`).join('\n');
     const context = document.getElementById('contextInput').value.trim();
-    const userMessage = `Fasi del progetto:\n${phaseText}${context ? '\n\nContesto: ' + context : ''}`;
+    const userMessage = `Project phases:\n${phaseText}${context ? '\n\nContext: ' + context : ''}`;
 
     setLoading(true); hideError();
     document.getElementById('responseWrap').style.display = 'none';
@@ -442,9 +454,9 @@
     try {
       const res = await fetch(WORKER_URL, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userMessage })
+        body: JSON.stringify({ userMessage, systemPrompt: s.system_prompt })
       });
-      if (!res.ok) throw new Error('Errore server: ' + res.status);
+      if (!res.ok) throw new Error(s.error_server + res.status);
       const data = await res.json();
       if (data.error) throw new Error(data.error);
       showResponse(data.text);
@@ -455,7 +467,7 @@
   function setLoading(on) {
     document.getElementById('ctaBtn').disabled = on;
     document.getElementById('spinner').style.display = on ? 'block' : 'none';
-    document.getElementById('btnText').textContent = on ? 'Analisi in corso...' : '⏱ Dammi la verità';
+    document.getElementById('btnText').textContent = on ? STRINGS[lang].loading : STRINGS[lang].cta;
   }
 
   function showResponse(text) {
@@ -465,7 +477,7 @@
       .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
       .replace(/\*(.*?)\*/g,'<em>$1</em>');
     document.getElementById('responseStamp').textContent =
-      new Date().toLocaleTimeString('it-IT', { hour:'2-digit', minute:'2-digit' });
+      new Date().toLocaleTimeString(lang === 'it' ? 'it-IT' : 'en-GB', { hour:'2-digit', minute:'2-digit' });
     const wrap = document.getElementById('responseWrap');
     wrap.style.display = 'block';
     setTimeout(() => wrap.scrollIntoView({ behavior:'smooth', block:'start' }), 100);
@@ -473,19 +485,23 @@
 
   function showError(m) { const e=document.getElementById('errorBox'); e.textContent=m; e.style.display='block'; }
   function hideError() { document.getElementById('errorBox').style.display='none'; }
-
   function copyText() {
     navigator.clipboard.writeText(document.getElementById('responseText').innerText).then(() => {
-      const b = event.target; b.textContent='Copied';
-      setTimeout(() => b.textContent='Copy', 2000);
+      const b = event.target; b.textContent = lang === 'it' ? 'Copiato!' : 'Copied!';
+      setTimeout(() => b.textContent = STRINGS[lang].copy, 2000);
     });
   }
-
   function resetForm() {
     phases = [];
-    addPhase('Prototipazione', '4 weeks');
-    addPhase('EVT', '6 weeks');
-    addPhase('DVT', '8 weeks');
+    if (lang === 'it') {
+      addPhase('Prototipazione', '4 settimane');
+      addPhase('EVT', '6 settimane');
+      addPhase('DVT', '8 settimane');
+    } else {
+      addPhase('Prototyping', '4 weeks');
+      addPhase('EVT', '6 weeks');
+      addPhase('DVT', '8 weeks');
+    }
     document.getElementById('contextInput').value = '';
     document.getElementById('responseWrap').style.display = 'none';
     window.scrollTo({ top:0, behavior:'smooth' });
