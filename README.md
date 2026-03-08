@@ -70,7 +70,7 @@ Revised estimates are AI-generated based on common patterns in the hardware indu
 ### 1. Fork and enable GitHub Pages
 1. Fork this repository
 2. Go to **Settings → Pages** → Source: `main` / `root`
-3. The site is live at `https://yourusername.github.io/timeline-realist`
+3. The site is live at `https://kathegrima.github.io/timeline-realist`
 
 ### 2. Create the Cloudflare Worker
 1. Sign up at [cloudflare.com](https://cloudflare.com)
